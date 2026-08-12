@@ -1,26 +1,57 @@
-QUICK READING AUDIT — ADD TO YOUR WEBSITE
+RESOURCE BANK — ADD TO YOUR WEBSITE
 
-1. Upload `reading-audit.html` to the SAME level as `index.html`.
+1. Upload `resource-bank.html` to the SAME level as your `index.html`.
 
-Your repository should contain:
+Your repository should now include:
 
 index.html
-monitor-review-toolkit.html
 reading-audit.html
+monitor-review-toolkit.html
+resource-bank.html
 
-2. In the existing Reading Audit card on `index.html`, use:
+2. Your main index page Resource Bank feature should link to:
 
-<article class="card tool-card">
-  <div class="tool-icon" aria-hidden="true">🧭</div>
-  <h3>Reading Audit</h3>
-  <p>Review current reading practices and identify strengths and areas for development.</p>
-
-  <a class="resource-link"
-     href="reading-audit.html">
-    Open Reading Audit
-  </a>
-</article>
+<a class="resource-link"
+   href="resource-bank.html">
+  Explore Resource Bank →
+</a>
 
 3. Commit the changes.
 
-No additional GitHub Pages settings are required.
+4. To add a genuine departmental URL:
+   - Open `resource-bank.html`
+   - Find the relevant card
+   - Replace:
+
+     <a class="resource-link disabled" href="#" aria-disabled="true">Link to be added</a>
+
+   with:
+
+     <a class="resource-link"
+        href="PASTE-THE-REAL-URL-HERE"
+        target="_blank"
+        rel="noopener">
+       Open Resource →
+     </a>
+
+5. To add a NEW resource:
+   - Duplicate one complete <article class="resource-card">...</article>
+   - Change:
+     * data-category
+     * data-search
+     * icon
+     * category label
+     * heading
+     * description
+     * URL
+
+Available category values:
+reading
+pedagogy
+digital
+curriculum
+inclusion
+leadership
+professional-learning
+
+The search and filter functions will work automatically.
