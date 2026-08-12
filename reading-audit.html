@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Quick Reading Audit tool to review current reading practices and identify strengths and areas for development.">
+  <title>Quick Reading Audit | From Evidence to Impact</title>
+  <style>
+    :root{
+      --navy:#102a43;
+      --blue:#1f5f99;
+      --teal:#0f7c7b;
+      --green:#2f855a;
+      --gold:#b7791f;
+      --purple:#6b46c1;
+      --ink:#243b53;
+      --muted:#627d98;
+      --bg:#f5f8fb;
+      --card:#ffffff;
+      --line:#d9e2ec;
+      --focus:#ffbf47;
+      --shadow:0 12px 28px rgba(16,42,67,.10);
+      --radius:22px;
+      --font-scale:1;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Arial, Helvetica, sans-serif;
+      font-size:calc(16px * var(--font-scale));
+      line-height:1.6;
+      color:var(--ink);
+      background:var(--bg);
+    }
+
+    body.high-contrast{
+      --navy:#000;
+      --blue:#0047ab;
+      --teal:#005f5f;
+      --green:#006400;
+      --gold:#8b5a00;
+      --purple:#4b0082;
+      --ink:#000;
+      --muted:#222;
+      --bg:#fff;
+      --card:#fff;
+      --line:#000;
+      --shadow:none;
+    }
+
+    a{color:var(--blue)}
+    a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible,summary:focus-visible{
+      outline:4px solid var(--focus);
+      outline-offset:3px;
+    }
+
+    .skip-link{
+      position:absolute;
+      left:-9999px;
+      top:10px;
+      background:#fff;
+      color:#000;
+      padding:12px 16px;
+      z-index:9999;
+      border:2px solid #000;
+    }
+    .skip-link:focus{left:10px}
+
+    header{
+      color:#fff;
+      background:
+        radial-gradient(circle at 85% 15%,rgba(255,255,255,.16),transparent 28%),
+        linear-gradient(135deg,var(--navy),var(--blue) 58%,var(--teal));
+    }
+
+    .topbar{
+      max-width:1200px;
+      margin:auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+      padding:18px 24px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      font-weight:700;
+    }
+
+    .brand-mark{
+      width:46px;height:46px;border-radius:50%;
+      display:grid;place-items:center;
+      background:#fff;color:var(--navy);
+      font-weight:800;
+    }
+
+    .access-tools{display:flex;gap:8px;flex-wrap:wrap}
+    .access-tools button{
+      background:rgba(255,255,255,.14);
+      color:#fff;
+      border:1px solid rgba(255,255,255,.45);
+      border-radius:999px;
+      padding:9px 12px;
+      cursor:pointer;
+      font-weight:700;
+    }
+
+    .hero{
+      max-width:1200px;
+      margin:auto;
+      padding:60px 24px 74px;
+    }
+
+    .eyebrow{
+      display:inline-block;
+      padding:7px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.14);
+      font-weight:700;
+      margin-bottom:18px;
+    }
+
+    h1{
+      font-size:clamp(2.5rem,6vw,5rem);
+      line-height:1.02;
+      margin:0 0 20px;
+      letter-spacing:-2px;
+    }
+
+    .hero p{font-size:1.18rem;max-width:820px;color:#eaf3f8}
+
+    .hero-actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-top:26px;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      padding:13px 18px;
+      border-radius:12px;
+      border:2px solid transparent;
+      font-weight:800;
+      text-decoration:none;
+      cursor:pointer;
+      font:inherit;
+    }
+
+    .btn-primary{background:#fff;color:var(--navy)}
+    .btn-secondary{border-color:#fff;color:#fff;background:transparent}
+    .btn-blue{background:var(--blue);color:#fff}
+    .btn-ghost{background:#fff;color:var(--navy);border-color:var(--line)}
+
+    .sticky{
+      position:sticky;
+      top:0;
+      z-index:40;
+      background:rgba(255,255,255,.97);
+      border-bottom:1px solid var(--line);
+      box-shadow:0 6px 18px rgba(16,42,67,.06);
+    }
+
+    .nav{
+      max-width:1200px;
+      margin:auto;
+      display:flex;
+      gap:8px;
+      overflow:auto;
+      padding:10px 20px;
+    }
+
+    .nav a{
+      white-space:nowrap;
+      text-decoration:none;
+      color:var(--ink);
+      padding:9px 12px;
+      border-radius:999px;
+      font-weight:700;
+    }
+
+    main{max-width:1200px;margin:auto;padding:48px 24px 90px}
+    section{scroll-margin-top:90px}
+
+    .section-heading{
+      max-width:850px;
+      margin:58px 0 24px;
+    }
+
+    .section-heading:first-child{margin-top:0}
+
+    .section-heading h2{
+      font-size:clamp(2rem,4vw,3.2rem);
+      line-height:1.08;
+      margin:0 0 12px;
+      color:var(--navy);
+    }
+
+    .section-heading p{font-size:1.08rem;color:var(--muted)}
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      padding:24px;
+      box-shadow:var(--shadow);
+    }
+
+    .intro-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:18px;
+      margin:20px 0 35px;
+    }
+
+    .intro-grid .card h3{margin-top:0;color:var(--navy)}
+
+    .audit-section{
+      margin-top:28px;
+      border-top:7px solid var(--section);
+    }
+
+    .audit-header{
+      display:grid;
+      grid-template-columns:1fr auto;
+      gap:20px;
+      align-items:start;
+    }
+
+    .audit-header h2{
+      margin:0 0 6px;
+      color:var(--navy);
+      font-size:1.8rem;
+    }
+
+    .audit-header p{margin:0;color:var(--muted)}
+
+    .prompt{
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:18px;
+      margin-top:16px;
+      background:#fff;
+    }
+
+    .prompt h3{margin:0 0 8px;color:var(--navy);font-size:1.08rem}
+
+    .evidence-note{
+      color:var(--muted);
+      font-size:.92rem;
+      margin:4px 0 12px;
+    }
+
+    .rating{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:10px;
+      margin:12px 0;
+    }
+
+    .rating label{
+      display:flex;
+      gap:8px;
+      align-items:flex-start;
+      border:1px solid var(--line);
+      border-radius:12px;
+      padding:10px;
+      font-weight:700;
+      cursor:pointer;
+    }
+
+    input[type="radio"],input[type="checkbox"]{
+      width:19px;height:19px;margin-top:3px;
+      accent-color:var(--section,var(--blue));
+      flex:0 0 auto;
+    }
+
+    textarea,input[type="text"],input[type="date"]{
+      width:100%;
+      border:1px solid #9fb3c8;
+      border-radius:12px;
+      padding:12px 13px;
+      font:inherit;
+      background:#fff;
+      color:#111;
+    }
+
+    textarea{min-height:90px;resize:vertical}
+
+    .two-col{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:16px;
+      margin-top:12px;
+    }
+
+    .field{margin-top:12px}
+    label.field-label{display:block;font-weight:800;margin-bottom:6px}
+
+    .callout{
+      margin:20px 0;
+      padding:18px;
+      border-left:6px solid var(--teal);
+      border-radius:0 14px 14px 0;
+      background:#e9f7f6;
+    }
+
+    .summary-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:18px;
+    }
+
+    .priority-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:14px;
+      margin-top:18px;
+    }
+
+    .priority-card{
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:16px;
+      background:#fff;
+    }
+
+    .priority-card h3{margin-top:0;color:var(--navy)}
+
+    .actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:22px;
+      padding-top:18px;
+      border-top:1px solid var(--line);
+    }
+
+    .status{font-size:.9rem;color:var(--muted);margin-top:8px}
+
+    footer{
+      background:var(--navy);
+      color:#fff;
+      padding:38px 24px;
+    }
+
+    footer .inner{max-width:1200px;margin:auto}
+
+    @media(max-width:900px){
+      .intro-grid,.summary-grid,.priority-grid{grid-template-columns:1fr}
+      .two-col{grid-template-columns:1fr}
+      .rating{grid-template-columns:1fr 1fr}
+    }
+
+    @media(max-width:620px){
+      .topbar{flex-direction:column;align-items:flex-start}
+      .audit-header{grid-template-columns:1fr}
+      .rating{grid-template-columns:1fr}
+      h1{letter-spacing:-1px}
+    }
+
+    @media(prefers-reduced-motion:reduce){
+      *{scroll-behavior:auto!important;transition:none!important;animation:none!important}
+    }
+
+    @media print{
+      .topbar,.hero-actions,.sticky,.access-tools,.actions{display:none!important}
+      header{background:#fff;color:#000}
+      .hero{padding:15px 0}
+      .hero p{color:#000}
+      body{background:#fff;color:#000;font-size:11pt}
+      main{max-width:none;padding:0}
+      .card{box-shadow:none}
+      .audit-section{page-break-before:always}
+      .audit-section:first-of-type{page-break-before:auto}
+      textarea{min-height:60px}
+      footer{background:#fff;color:#000;border-top:1px solid #000}
+    }
+  </style>
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <header>
+    <div class="topbar">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">EI</div>
+        <div>From Evidence to Impact</div>
+      </div>
+
+      <div class="access-tools" aria-label="Accessibility tools">
+        <button type="button" id="textDown">A−</button>
+        <button type="button" id="textUp">A+</button>
+        <button type="button" id="contrastToggle">High contrast</button>
+        <button type="button" id="printPage">Print / Save PDF</button>
+      </div>
+    </div>
+
+    <div class="hero">
+      <div class="eyebrow">Scan & Assess</div>
+      <h1>Quick Reading<br>Audit</h1>
+      <p>Review current reading practices, bring together evidence from Reading Signposts, instructional walkthroughs, student outcomes, planning and staff voice, and identify strengths and areas for development.</p>
+
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#audit">Begin audit</a>
+        <a class="btn btn-secondary" href="index.html#toolkit">← Back to Leadership Toolkit</a>
+      </div>
+    </div>
+  </header>
+
+  <nav class="sticky" aria-label="Quick Reading Audit sections">
+    <div class="nav">
+      <a href="#audit">Overview</a>
+      <a href="#culture">Culture & Leadership</a>
+      <a href="#curriculum">Curriculum</a>
+      <a href="#instruction">Instruction</a>
+      <a href="#assessment">Assessment</a>
+      <a href="#support">Differentiation</a>
+      <a href="#capability">Capability</a>
+      <a href="#summary">Summary</a>
+    </div>
+  </nav>
+
+  <main id="main">
+    <section id="audit">
+      <div class="section-heading">
+        <h2>Build a picture of current reading practice</h2>
+        <p>This audit is designed as a quick leadership scan, not a compliance checklist. Use more than one source of evidence and record what is actually visible in practice. The aim is to identify patterns that can inform the next phase of the Inquiry Cycle.</p>
+      </div>
+
+      <div class="intro-grid">
+        <article class="card">
+          <h3>1. Use multiple evidence sources</h3>
+          <p>Reading Signposts, walkthroughs, student data, student work, planning, staff voice and professional learning evidence.</p>
+        </article>
+        <article class="card">
+          <h3>2. Judge current practice</h3>
+          <p>Rate each area as Not yet evident, Emerging, Consistent or Embedded, and record the evidence behind the judgement.</p>
+        </article>
+        <article class="card">
+          <h3>3. Identify the next focus</h3>
+          <p>Look for patterns across the audit rather than selecting an area based on one observation or one data source.</p>
+        </article>
+      </div>
+
+      <div class="callout">
+        <strong>Suggested evidence sources:</strong> Reading Signposts mapping, instructional walkthroughs, student reading data, student work, curriculum and planning documents, intervention records, staff capability information, student voice and leadership observations.
+      </div>
+
+      <div class="two-col">
+        <div class="field">
+          <label class="field-label" for="school">School / team</label>
+          <input id="school" type="text" data-save="school">
+        </div>
+        <div class="field">
+          <label class="field-label" for="date">Audit date</label>
+          <input id="date" type="date" data-save="date">
+        </div>
+      </div>
+    </section>
+
+    <section id="culture" class="card audit-section" style="--section:var(--blue)">
+      <div class="audit-header">
+        <div>
+          <h2>1. Reading Culture & Leadership</h2>
+          <p>How visible, coherent and collectively owned is reading improvement across the school?</p>
+        </div>
+      </div>
+
+      <div class="prompt">
+        <h3>Reading is a clearly articulated school priority, understood by staff and connected to student outcomes.</h3>
+        <p class="evidence-note">Look for: shared language, improvement plans, meeting agendas, leadership communication, staff understanding.</p>
+        <div class="rating">
+          <label><input type="radio" name="r1" value="Not yet evident" data-radio="r1"> Not yet evident</label>
+          <label><input type="radio" name="r1" value="Emerging" data-radio="r1"> Emerging</label>
+          <label><input type="radio" name="r1" value="Consistent" data-radio="r1"> Consistent</label>
+          <label><input type="radio" name="r1" value="Embedded" data-radio="r1"> Embedded</label>
+        </div>
+        <label class="field-label" for="e1">Evidence / notes</label>
+        <textarea id="e1" data-save="e1"></textarea>
+      </div>
+
+      <div class="prompt">
+        <h3>Leaders regularly monitor reading practice and use evidence to guide support and next steps.</h3>
+        <p class="evidence-note">Look for: walkthrough schedules, feedback processes, leadership check-ins, review points, coaching or support.</p>
+        <div class="rating">
+          <label><input type="radio" name="r2" value="Not yet evident" data-radio="r2"> Not yet evident</label>
+          <label><input type="radio" name="r2" value="Emerging" data-radio="r2"> Emerging</label>
+          <label><input type="radio" name="r2" value="Consistent" data-radio="r2"> Consistent</label>
+          <label><input type="radio" name="r2" value="Embedded" data-radio="r2"> Embedded</label>
+        </div>
+        <label class="field-label" for="e2">Evidence / notes</label>
+        <textarea id="e2" data-save="e2"></textarea>
+      </div>
+    </section>
+
+    <section id="curriculum" class="card audit-section" style="--section:var(--teal)">
+      <div class="audit-header">
+        <div>
+          <h2>2. Curriculum & Reading Demands</h2>
+          <p>How deliberately are the reading demands of curriculum texts identified and planned for?</p>
+        </div>
+      </div>
+
+      <div class="prompt">
+        <h3>Planning identifies the reading demands students need to successfully access curriculum texts.</h3>
+        <p class="evidence-note">Look for: text complexity, vocabulary, background knowledge, text structure, comprehension demands and discipline-specific reading.</p>
+        <div class="rating">
+          <label><input type="radio" name="r3" value="Not yet evident" data-radio="r3"> Not yet evident</label>
+          <label><input type="radio" name="r3" value="Emerging" data-radio="r3"> Emerging</label>
+          <label><input type="radio" name="r3" value="Consistent" data-radio="r3"> Consistent</label>
+          <label><input type="radio" name="r3" value="Embedded" data-radio="r3"> Embedded</label>
+        </div>
+        <label class="field-label" for="e3">Evidence / notes</label>
+        <textarea id="e3" data-save="e3"></textarea>
+      </div>
+
+      <div class="prompt">
+        <h3>Students have regular access to appropriately challenging, purposeful and varied texts across learning areas.</h3>
+        <p class="evidence-note">Look for: classroom texts, planning, text selection, opportunities to read across genres and curriculum areas.</p>
+        <div class="rating">
+          <label><input type="radio" name="r4" value="Not yet evident" data-radio="r4"> Not yet evident</label>
+          <label><input type="radio" name="r4" value="Emerging" data-radio="r4"> Emerging</label>
+          <label><input type="radio" name="r4" value="Consistent" data-radio="r4"> Consistent</label>
+          <label><input type="radio" name="r4" value="Embedded" data-radio="r4"> Embedded</label>
+        </div>
+        <label class="field-label" for="e4">Evidence / notes</label>
+        <textarea id="e4" data-save="e4"></textarea>
+      </div>
+    </section>
+
+    <section id="instruction" class="card audit-section" style="--section:var(--purple)">
+      <div class="audit-header">
+        <div>
+          <h2>3. Explicit Reading Instruction</h2>
+          <p>What do instructional walkthroughs show about the consistency and quality of reading instruction?</p>
+        </div>
+      </div>
+
+      <div class="prompt">
+        <h3>Walkthroughs show explicit teaching of the reading knowledge and strategies students need.</h3>
+        <p class="evidence-note">Look for: clear learning intentions, modelling, guided practice, checks for understanding, purposeful practice and feedback.</p>
+        <div class="rating">
+          <label><input type="radio" name="r5" value="Not yet evident" data-radio="r5"> Not yet evident</label>
+          <label><input type="radio" name="r5" value="Emerging" data-radio="r5"> Emerging</label>
+          <label><input type="radio" name="r5" value="Consistent" data-radio="r5"> Consistent</label>
+          <label><input type="radio" name="r5" value="Embedded" data-radio="r5"> Embedded</label>
+        </div>
+        <label class="field-label" for="e5">Evidence / notes</label>
+        <textarea id="e5" data-save="e5"></textarea>
+      </div>
+
+      <div class="prompt">
+        <h3>Students are supported to build accuracy, fluency, vocabulary, background knowledge and comprehension.</h3>
+        <p class="evidence-note">Look for: instructional routines, modelling, oral language, vocabulary instruction, repeated reading, comprehension discussion and knowledge building.</p>
+        <div class="rating">
+          <label><input type="radio" name="r6" value="Not yet evident" data-radio="r6"> Not yet evident</label>
+          <label><input type="radio" name="r6" value="Emerging" data-radio="r6"> Emerging</label>
+          <label><input type="radio" name="r6" value="Consistent" data-radio="r6"> Consistent</label>
+          <label><input type="radio" name="r6" value="Embedded" data-radio="r6"> Embedded</label>
+        </div>
+        <label class="field-label" for="e6">Evidence / notes</label>
+        <textarea id="e6" data-save="e6"></textarea>
+      </div>
+
+      <div class="prompt">
+        <h3>Students can explain what they are learning in reading, how they are improving and what successful reading looks like.</h3>
+        <p class="evidence-note">Look for: student voice during walkthroughs, learning walls, success criteria, feedback and student self-monitoring.</p>
+        <div class="rating">
+          <label><input type="radio" name="r7" value="Not yet evident" data-radio="r7"> Not yet evident</label>
+          <label><input type="radio" name="r7" value="Emerging" data-radio="r7"> Emerging</label>
+          <label><input type="radio" name="r7" value="Consistent" data-radio="r7"> Consistent</label>
+          <label><input type="radio" name="r7" value="Embedded" data-radio="r7"> Embedded</label>
+        </div>
+        <label class="field-label" for="e7">Evidence / notes</label>
+        <textarea id="e7" data-save="e7"></textarea>
+      </div>
+    </section>
+
+    <section id="assessment" class="card audit-section" style="--section:var(--gold)">
+      <div class="audit-header">
+        <div>
+          <h2>4. Assessment & Use of Evidence</h2>
+          <p>How effectively is reading evidence used to identify need, plan instruction and monitor progress?</p>
+        </div>
+      </div>
+
+      <div class="prompt">
+        <h3>Multiple sources of reading evidence are used to identify strengths, needs and patterns.</h3>
+        <p class="evidence-note">Look for: screening, diagnostic data, student work, curriculum assessment, teacher observation and progress over time.</p>
+        <div class="rating">
+          <label><input type="radio" name="r8" value="Not yet evident" data-radio="r8"> Not yet evident</label>
+          <label><input type="radio" name="r8" value="Emerging" data-radio="r8"> Emerging</label>
+          <label><input type="radio" name="r8" value="Consistent" data-radio="r8"> Consistent</label>
+          <label><input type="radio" name="r8" value="Embedded" data-radio="r8"> Embedded</label>
+        </div>
+        <label class="field-label" for="e8">Evidence / notes</label>
+        <textarea id="e8" data-save="e8"></textarea>
+      </div>
+
+      <div class="prompt">
+        <h3>Reading data is interpreted and translated into instructional decisions rather than simply collected.</h3>
+        <p class="evidence-note">Look for: data discussions, regrouping, targeted teaching, progress monitoring, intervention decisions and changes to instruction.</p>
+        <div class="rating">
+          <label><input type="radio" name="r9" value="Not yet evident" data-radio="r9"> Not yet evident</label>
+          <label><input type="radio" name="r9" value="Emerging" data-radio="r9"> Emerging</label>
+          <label><input type="radio" name="r9" value="Consistent" data-radio="r9"> Consistent</label>
+          <label><input type="radio" name="r9" value="Embedded" data-radio="r9"> Embedded</label>
+        </div>
+        <label class="field-label" for="e9">Evidence / notes</label>
+        <textarea id="e9" data-save="e9"></textarea>
+      </div>
+    </section>
+
+    <section id="support" class="card audit-section" style="--section:var(--green)">
+      <div class="audit-header">
+        <div>
+          <h2>5. Differentiation, Intervention & Extension</h2>
+          <p>How well does the reading response match the different needs of learners?</p>
+        </div>
+      </div>
+
+      <div class="prompt">
+        <h3>Students requiring additional support are identified early and receive targeted instruction matched to need.</h3>
+        <p class="evidence-note">Look for: intervention entry criteria, diagnostic information, targeted goals, intensity, frequency and progress monitoring.</p>
+        <div class="rating">
+          <label><input type="radio" name="r10" value="Not yet evident" data-radio="r10"> Not yet evident</label>
+          <label><input type="radio" name="r10" value="Emerging" data-radio="r10"> Emerging</label>
+          <label><input type="radio" name="r10" value="Consistent" data-radio="r10"> Consistent</label>
+          <label><input type="radio" name="r10" value="Embedded" data-radio="r10"> Embedded</label>
+        </div>
+        <label class="field-label" for="e10">Evidence / notes</label>
+        <textarea id="e10" data-save="e10"></textarea>
+      </div>
+
+      <div class="prompt">
+        <h3>Classroom instruction is adjusted so all students can access appropriate challenge and support.</h3>
+        <p class="evidence-note">Look for: scaffolds, grouping, adjusted texts/tasks, extension, differentiated practice and evidence-informed teaching responses.</p>
+        <div class="rating">
+          <label><input type="radio" name="r11" value="Not yet evident" data-radio="r11"> Not yet evident</label>
+          <label><input type="radio" name="r11" value="Emerging" data-radio="r11"> Emerging</label>
+          <label><input type="radio" name="r11" value="Consistent" data-radio="r11"> Consistent</label>
+          <label><input type="radio" name="r11" value="Embedded" data-radio="r11"> Embedded</label>
+        </div>
+        <label class="field-label" for="e11">Evidence / notes</label>
+        <textarea id="e11" data-save="e11"></textarea>
+      </div>
+    </section>
+
+    <section id="capability" class="card audit-section" style="--section:var(--teal)">
+      <div class="audit-header">
+        <div>
+          <h2>6. Staff Capability & Collaborative Practice</h2>
+          <p>Do staff have the knowledge, confidence and support required to strengthen reading outcomes?</p>
+        </div>
+      </div>
+
+      <div class="prompt">
+        <h3>Staff share a common understanding of effective reading instruction and agreed school practices.</h3>
+        <p class="evidence-note">Look for: shared routines, common language, collaborative planning, moderation and consistency across classrooms.</p>
+        <div class="rating">
+          <label><input type="radio" name="r12" value="Not yet evident" data-radio="r12"> Not yet evident</label>
+          <label><input type="radio" name="r12" value="Emerging" data-radio="r12"> Emerging</label>
+          <label><input type="radio" name="r12" value="Consistent" data-radio="r12"> Consistent</label>
+          <label><input type="radio" name="r12" value="Embedded" data-radio="r12"> Embedded</label>
+        </div>
+        <label class="field-label" for="e12">Evidence / notes</label>
+        <textarea id="e12" data-save="e12"></textarea>
+      </div>
+
+      <div class="prompt">
+        <h3>Professional learning, coaching and support are responsive to identified staff and student needs.</h3>
+        <p class="evidence-note">Look for: staff capability surveys, professional learning plans, coaching, modelling, feedback and follow-up support.</p>
+        <div class="rating">
+          <label><input type="radio" name="r13" value="Not yet evident" data-radio="r13"> Not yet evident</label>
+          <label><input type="radio" name="r13" value="Emerging" data-radio="r13"> Emerging</label>
+          <label><input type="radio" name="r13" value="Consistent" data-radio="r13"> Consistent</label>
+          <label><input type="radio" name="r13" value="Embedded" data-radio="r13"> Embedded</label>
+        </div>
+        <label class="field-label" for="e13">Evidence / notes</label>
+        <textarea id="e13" data-save="e13"></textarea>
+      </div>
+    </section>
+
+    <section id="summary">
+      <div class="section-heading">
+        <h2>Audit Summary & Next Steps</h2>
+        <p>Use the patterns across the audit to identify where practice is strong, where evidence is inconsistent or missing, and which area may warrant deeper investigation through the Inquiry Cycle.</p>
+      </div>
+
+      <div class="summary-grid">
+        <div class="card">
+          <label class="field-label" for="strengths">Key strengths</label>
+          <textarea id="strengths" data-save="strengths" placeholder="What is working well and should be protected or built upon?"></textarea>
+        </div>
+
+        <div class="card">
+          <label class="field-label" for="development">Areas for development</label>
+          <textarea id="development" data-save="development" placeholder="Where is practice emerging, inconsistent or unsupported by evidence?"></textarea>
+        </div>
+
+        <div class="card">
+          <label class="field-label" for="missing">Evidence still needed</label>
+          <textarea id="missing" data-save="missing" placeholder="What do we need to investigate before deciding on a priority?"></textarea>
+        </div>
+
+        <div class="card">
+          <label class="field-label" for="patterns">Patterns across evidence sources</label>
+          <textarea id="patterns" data-save="patterns" placeholder="What is consistent across Reading Signposts, walkthroughs, data, planning and staff voice?"></textarea>
+        </div>
+      </div>
+
+      <div class="priority-grid">
+        <article class="priority-card">
+          <h3>Possible Focus 1</h3>
+          <label class="field-label" for="focus1">Area</label>
+          <input id="focus1" type="text" data-save="focus1">
+          <label class="field-label" for="why1" style="margin-top:10px">Why this may matter</label>
+          <textarea id="why1" data-save="why1"></textarea>
+        </article>
+
+        <article class="priority-card">
+          <h3>Possible Focus 2</h3>
+          <label class="field-label" for="focus2">Area</label>
+          <input id="focus2" type="text" data-save="focus2">
+          <label class="field-label" for="why2" style="margin-top:10px">Why this may matter</label>
+          <textarea id="why2" data-save="why2"></textarea>
+        </article>
+
+        <article class="priority-card">
+          <h3>Possible Focus 3</h3>
+          <label class="field-label" for="focus3">Area</label>
+          <input id="focus3" type="text" data-save="focus3">
+          <label class="field-label" for="why3" style="margin-top:10px">Why this may matter</label>
+          <textarea id="why3" data-save="why3"></textarea>
+        </article>
+      </div>
+
+      <div class="card" style="margin-top:18px">
+        <label class="field-label" for="nextquestion">Question to take into Prioritise & Focus</label>
+        <textarea id="nextquestion" data-save="nextquestion" placeholder="Based on the evidence, what is the most important area for us to investigate or strengthen next?"></textarea>
+
+        <div class="actions">
+          <button class="btn btn-blue" type="button" id="printAudit">Print / Save Audit</button>
+          <a class="btn btn-blue" href="index.html#prioritise">Continue to Prioritise &amp; Focus →</a>
+          <button class="btn btn-ghost" type="button" id="clearAudit">Clear audit</button>
+        </div>
+        <p class="status">Responses save automatically in this browser.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="inner">
+      <strong>From Evidence to Impact</strong>
+      <p>Quick Reading Audit — combining Reading Signposts reflection with evidence from walkthroughs, outcomes, planning and staff voice.</p>
+      <p><a href="index.html" style="color:#fff">Return to the Inquiry Cycle homepage</a></p>
+    </div>
+  </footer>
+
+  <script>
+    const prefix = "quick-reading-audit-v1-";
+
+    document.querySelectorAll("[data-save]").forEach(el => {
+      const key = prefix + el.dataset.save;
+      const saved = localStorage.getItem(key);
+      if(saved !== null) el.value = saved;
+      el.addEventListener("input", () => localStorage.setItem(key, el.value));
+      el.addEventListener("change", () => localStorage.setItem(key, el.value));
+    });
+
+    document.querySelectorAll("[data-radio]").forEach(el => {
+      const key = prefix + "radio-" + el.dataset.radio;
+      const saved = localStorage.getItem(key);
+      if(saved === el.value) el.checked = true;
+      el.addEventListener("change", () => {
+        if(el.checked) localStorage.setItem(key, el.value);
+      });
+    });
+
+    let scale = Number(localStorage.getItem(prefix + "font-scale") || 1);
+    const root = document.documentElement;
+
+    function applyScale(){
+      scale = Math.max(.9, Math.min(1.35, scale));
+      root.style.setProperty("--font-scale", scale);
+      localStorage.setItem(prefix + "font-scale", scale);
+    }
+
+    document.getElementById("textUp").addEventListener("click", () => { scale += .1; applyScale(); });
+    document.getElementById("textDown").addEventListener("click", () => { scale -= .1; applyScale(); });
+
+    const contrastKey = prefix + "contrast";
+    if(localStorage.getItem(contrastKey) === "true") document.body.classList.add("high-contrast");
+
+    document.getElementById("contrastToggle").addEventListener("click", () => {
+      document.body.classList.toggle("high-contrast");
+      localStorage.setItem(contrastKey, document.body.classList.contains("high-contrast"));
+    });
+
+    document.getElementById("printPage").addEventListener("click", () => window.print());
+    document.getElementById("printAudit").addEventListener("click", () => window.print());
+
+    document.getElementById("clearAudit").addEventListener("click", () => {
+      if(!window.confirm("Clear all saved responses in this Reading Audit?")) return;
+
+      Object.keys(localStorage).forEach(key => {
+        if(key.startsWith(prefix)) localStorage.removeItem(key);
+      });
+
+      document.querySelectorAll("[data-save]").forEach(el => el.value = "");
+      document.querySelectorAll("[data-radio]").forEach(el => el.checked = false);
+    });
+
+    applyScale();
+  </script>
+</body>
+</html>

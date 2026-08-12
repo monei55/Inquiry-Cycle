@@ -1,33 +1,26 @@
-MONITORING & REVIEW TOOLKIT — GITHUB INSTRUCTIONS
+QUICK READING AUDIT — ADD TO YOUR WEBSITE
 
-1. Upload `monitor-review-toolkit.html` to the SAME level as `index.html` in your Inquiry-Cycle repository.
+1. Upload `reading-audit.html` to the SAME level as `index.html`.
 
-Your repository should look like:
+Your repository should contain:
 
 index.html
 monitor-review-toolkit.html
+reading-audit.html
 
-2. On the main index.html page, add this button inside the Monitor & Review section:
+2. In the existing Reading Audit card on `index.html`, use:
 
-<a class="btn btn-blue" href="monitor-review-toolkit.html">
-  Open Monitoring &amp; Review Toolkit →
-</a>
+<article class="card tool-card">
+  <div class="tool-icon" aria-hidden="true">🧭</div>
+  <h3>Reading Audit</h3>
+  <p>Review current reading practices and identify strengths and areas for development.</p>
 
-If you prefer it to match the existing complete-phase button, use:
+  <a class="resource-link"
+     href="reading-audit.html">
+    Open Reading Audit
+  </a>
+</article>
 
-<a class="resource-link" href="monitor-review-toolkit.html">
-  Open Monitoring &amp; Review Toolkit →
-</a>
+3. Commit the changes.
 
-3. Commit the change.
-
-Because you are using GitHub Pages from the main branch, no additional workflow or folder is required.
-
-The toolkit page contains:
-- Implementation Monitoring Tool
-- Impact Review Tool
-- Evidence Triangulation Tool
-- Quick Leadership Check-in
-- Next-Step Decision Tool
-
-Responses save in the user's browser using localStorage.
+No additional GitHub Pages settings are required.
