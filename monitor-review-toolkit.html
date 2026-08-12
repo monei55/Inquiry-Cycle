@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Monitoring and Review Toolkit for evidence-informed school improvement.">
+  <title>Monitoring & Review Toolkit | From Evidence to Impact</title>
+  <style>
+    :root{
+      --navy:#102a43;
+      --blue:#1f5f99;
+      --teal:#0f7c7b;
+      --green:#2f855a;
+      --gold:#b7791f;
+      --purple:#6b46c1;
+      --ink:#243b53;
+      --muted:#627d98;
+      --bg:#f5f8fb;
+      --card:#ffffff;
+      --line:#d9e2ec;
+      --focus:#ffbf47;
+      --shadow:0 12px 28px rgba(16,42,67,.10);
+      --radius:22px;
+      --font-scale:1;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Arial, Helvetica, sans-serif;
+      font-size:calc(16px * var(--font-scale));
+      line-height:1.6;
+      color:var(--ink);
+      background:var(--bg);
+    }
+
+    body.high-contrast{
+      --navy:#000;
+      --blue:#0047ab;
+      --teal:#005f5f;
+      --green:#006400;
+      --gold:#8b5a00;
+      --purple:#4b0082;
+      --ink:#000;
+      --muted:#222;
+      --bg:#fff;
+      --card:#fff;
+      --line:#000;
+      --shadow:none;
+    }
+
+    a{color:var(--blue)}
+    a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible,summary:focus-visible{
+      outline:4px solid var(--focus);
+      outline-offset:3px;
+    }
+
+    .skip-link{
+      position:absolute;
+      left:-9999px;
+      top:10px;
+      background:#fff;
+      color:#000;
+      padding:12px 16px;
+      z-index:9999;
+      border:2px solid #000;
+    }
+    .skip-link:focus{left:10px}
+
+    header{
+      color:#fff;
+      background:
+        radial-gradient(circle at 85% 15%,rgba(255,255,255,.16),transparent 28%),
+        linear-gradient(135deg,var(--navy),var(--blue) 58%,var(--teal));
+    }
+
+    .topbar{
+      max-width:1200px;
+      margin:auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+      padding:18px 24px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      font-weight:700;
+    }
+
+    .brand-mark{
+      width:46px;height:46px;border-radius:50%;
+      display:grid;place-items:center;
+      background:#fff;color:var(--navy);
+      font-weight:800;
+    }
+
+    .access-tools{display:flex;gap:8px;flex-wrap:wrap}
+    .access-tools button{
+      background:rgba(255,255,255,.14);
+      color:#fff;
+      border:1px solid rgba(255,255,255,.45);
+      border-radius:999px;
+      padding:9px 12px;
+      cursor:pointer;
+      font-weight:700;
+    }
+
+    .hero{
+      max-width:1200px;
+      margin:auto;
+      padding:60px 24px 74px;
+    }
+
+    .eyebrow{
+      display:inline-block;
+      padding:7px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.14);
+      font-weight:700;
+      margin-bottom:18px;
+    }
+
+    h1{
+      font-size:clamp(2.5rem,6vw,5rem);
+      line-height:1.02;
+      margin:0 0 20px;
+      letter-spacing:-2px;
+    }
+
+    .hero p{font-size:1.18rem;max-width:800px;color:#eaf3f8}
+
+    .hero-actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-top:26px;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      padding:13px 18px;
+      border-radius:12px;
+      border:2px solid transparent;
+      font-weight:800;
+      text-decoration:none;
+      cursor:pointer;
+      font:inherit;
+    }
+    .btn-primary{background:#fff;color:var(--navy)}
+    .btn-secondary{border-color:#fff;color:#fff;background:transparent}
+    .btn-blue{background:var(--blue);color:#fff}
+    .btn-green{background:var(--green);color:#fff}
+    .btn-ghost{background:#fff;color:var(--navy);border-color:var(--line)}
+
+    .sticky{
+      position:sticky;
+      top:0;
+      z-index:40;
+      background:rgba(255,255,255,.97);
+      border-bottom:1px solid var(--line);
+      box-shadow:0 6px 18px rgba(16,42,67,.06);
+    }
+
+    .nav{
+      max-width:1200px;
+      margin:auto;
+      display:flex;
+      gap:8px;
+      overflow:auto;
+      padding:10px 20px;
+    }
+
+    .nav a{
+      white-space:nowrap;
+      text-decoration:none;
+      color:var(--ink);
+      padding:9px 12px;
+      border-radius:999px;
+      font-weight:700;
+    }
+    .nav a:hover{background:#edf4fa}
+
+    main{max-width:1200px;margin:auto;padding:48px 24px 90px}
+    section{scroll-margin-top:90px}
+
+    .section-heading{
+      max-width:830px;
+      margin:58px 0 24px;
+    }
+    .section-heading:first-child{margin-top:0}
+
+    .section-heading h2{
+      font-size:clamp(2rem,4vw,3.3rem);
+      line-height:1.08;
+      margin:0 0 12px;
+      color:var(--navy);
+    }
+
+    .section-heading p{font-size:1.08rem;color:var(--muted)}
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      padding:24px;
+      box-shadow:var(--shadow);
+    }
+
+    .tool-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:22px;
+    }
+
+    .tool-card{
+      min-height:285px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      border-top:7px solid var(--tool);
+    }
+
+    .tool-icon{
+      width:52px;height:52px;border-radius:16px;
+      display:grid;place-items:center;
+      background:#eef4fa;
+      font-size:1.7rem;
+    }
+
+    .tool-card h3{
+      color:var(--navy);
+      font-size:1.35rem;
+      margin:15px 0 6px;
+    }
+
+    .tool-question{
+      font-weight:800;
+      color:var(--tool);
+      margin:0 0 10px;
+    }
+
+    .tool-card .btn{margin-top:14px;align-self:flex-start}
+
+    .tool-section{
+      margin-top:34px;
+      border-top:8px solid var(--tool);
+    }
+
+    .tool-header{
+      display:grid;
+      grid-template-columns:1fr auto;
+      gap:20px;
+      align-items:start;
+    }
+
+    .tool-header h2{margin:0 0 5px;color:var(--navy);font-size:2rem}
+    .tool-header p{margin-top:0;color:var(--muted)}
+
+    .form-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:18px;
+      margin-top:20px;
+    }
+
+    .field{margin-bottom:17px}
+    .field.full{grid-column:1/-1}
+    label{display:block;font-weight:800;margin-bottom:6px}
+
+    input[type="text"],input[type="date"],textarea,select{
+      width:100%;
+      border:1px solid #9fb3c8;
+      border-radius:12px;
+      padding:12px 13px;
+      font:inherit;
+      background:#fff;
+      color:#111;
+    }
+
+    textarea{min-height:105px;resize:vertical}
+
+    .scale{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:10px;
+    }
+
+    .scale label{
+      display:flex;
+      gap:8px;
+      align-items:flex-start;
+      border:1px solid var(--line);
+      border-radius:12px;
+      padding:10px;
+      font-weight:600;
+      cursor:pointer;
+    }
+
+    input[type="radio"],input[type="checkbox"]{
+      width:19px;height:19px;margin-top:3px;
+      accent-color:var(--tool,var(--blue));
+      flex:0 0 auto;
+    }
+
+    .evidence-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:18px;
+      margin-top:22px;
+    }
+
+    .evidence-lens{
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:18px;
+      background:#fff;
+      border-top:6px solid var(--tool);
+    }
+
+    .evidence-lens h3{margin-top:0;color:var(--navy)}
+
+    .decision-grid{
+      display:grid;
+      grid-template-columns:repeat(5,1fr);
+      gap:12px;
+      margin:18px 0;
+    }
+
+    .decision-option{
+      border:2px solid var(--line);
+      border-radius:16px;
+      padding:15px;
+      background:#fff;
+    }
+
+    .decision-option label{
+      display:flex;
+      flex-direction:column;
+      gap:5px;
+      cursor:pointer;
+    }
+
+    .decision-option strong{color:var(--navy)}
+
+    .callout{
+      margin:20px 0;
+      padding:18px;
+      border-left:6px solid var(--teal);
+      border-radius:0 14px 14px 0;
+      background:#e9f7f6;
+    }
+
+    .status{
+      color:var(--muted);
+      font-size:.9rem;
+      margin-top:8px;
+    }
+
+    .tool-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      border-top:1px solid var(--line);
+      margin-top:24px;
+      padding-top:18px;
+    }
+
+    .small{font-size:.92rem;color:var(--muted)}
+
+    footer{
+      background:var(--navy);
+      color:#fff;
+      padding:38px 24px;
+    }
+
+    footer .inner{max-width:1200px;margin:auto}
+
+    @media(max-width:980px){
+      .tool-grid{grid-template-columns:repeat(2,1fr)}
+      .decision-grid{grid-template-columns:repeat(2,1fr)}
+      .evidence-grid{grid-template-columns:1fr}
+    }
+
+    @media(max-width:680px){
+      .topbar{flex-direction:column;align-items:flex-start}
+      .tool-grid,.form-grid,.decision-grid{grid-template-columns:1fr}
+      .field.full{grid-column:auto}
+      .tool-header{grid-template-columns:1fr}
+      .scale{grid-template-columns:1fr 1fr}
+      h1{letter-spacing:-1px}
+    }
+
+    @media(prefers-reduced-motion:reduce){
+      *{scroll-behavior:auto!important;transition:none!important;animation:none!important}
+    }
+
+    @media print{
+      .topbar,.hero-actions,.sticky,.access-tools,.tool-grid,.tool-actions,.back-top{display:none!important}
+      header{background:#fff;color:#000}
+      .hero{padding:15px 0}
+      .hero p{color:#000}
+      body{background:#fff;color:#000;font-size:11pt}
+      main{max-width:none;padding:0}
+      .card{box-shadow:none}
+      .tool-section{page-break-before:always}
+      .tool-section:first-of-type{page-break-before:auto}
+      textarea{min-height:65px}
+      footer{background:#fff;color:#000;border-top:1px solid #000}
+    }
+  </style>
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <header>
+    <div class="topbar">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">EI</div>
+        <div>From Evidence to Impact</div>
+      </div>
+
+      <div class="access-tools" aria-label="Accessibility tools">
+        <button type="button" id="textDown">A−</button>
+        <button type="button" id="textUp">A+</button>
+        <button type="button" id="contrastToggle">High contrast</button>
+        <button type="button" id="printPage">Print / Save PDF</button>
+      </div>
+    </div>
+
+    <div class="hero">
+      <div class="eyebrow">Monitor & Review</div>
+      <h1>Monitoring &amp;<br>Review Toolkit</h1>
+      <p>Choose the tool that matches the question your leadership team needs to answer. The tools are deliberately general so they can be used across reading, writing, numeracy, attendance, behaviour, engagement, pedagogy, assessment and other improvement priorities.</p>
+
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#choose">Choose a tool</a>
+        <a class="btn btn-secondary" href="index.html#review">← Back to Inquiry Cycle</a>
+      </div>
+    </div>
+  </header>
+
+  <nav class="sticky" aria-label="Monitoring and Review Toolkit">
+    <div class="nav">
+      <a href="#choose">Toolkit</a>
+      <a href="#implementation">Implementation</a>
+      <a href="#impact">Impact</a>
+      <a href="#triangulation">Evidence</a>
+      <a href="#checkin">Check-in</a>
+      <a href="#decision">Next Decision</a>
+    </div>
+  </nav>
+
+  <main id="main">
+    <section id="choose">
+      <div class="section-heading">
+        <h2>What do you need to know?</h2>
+        <p>Monitoring and review should help leaders determine whether agreed practices are being implemented, whether those actions are making a difference, and what should happen next. Select the tool that best matches the decision you need to make.</p>
+      </div>
+
+      <div class="tool-grid">
+        <article class="card tool-card" style="--tool:var(--blue)">
+          <div>
+            <div class="tool-icon" aria-hidden="true">✓</div>
+            <h3>Implementation Monitoring</h3>
+            <p class="tool-question">Are we doing what we agreed?</p>
+            <p>Check whether agreed actions and practices are visible, consistent and supported.</p>
+          </div>
+          <a class="btn btn-blue" href="#implementation">Open tool →</a>
+        </article>
+
+        <article class="card tool-card" style="--tool:var(--green)">
+          <div>
+            <div class="tool-icon" aria-hidden="true">↗</div>
+            <h3>Impact Review</h3>
+            <p class="tool-question">Is it making a difference?</p>
+            <p>Compare intended changes with current evidence of practice and student outcomes.</p>
+          </div>
+          <a class="btn btn-blue" href="#impact">Open tool →</a>
+        </article>
+
+        <article class="card tool-card" style="--tool:var(--purple)">
+          <div>
+            <div class="tool-icon" aria-hidden="true">◉</div>
+            <h3>Evidence Triangulation</h3>
+            <p class="tool-question">What does the evidence collectively tell us?</p>
+            <p>Bring together implementation, outcome and perception evidence before drawing a conclusion.</p>
+          </div>
+          <a class="btn btn-blue" href="#triangulation">Open tool →</a>
+        </article>
+
+        <article class="card tool-card" style="--tool:var(--gold)">
+          <div>
+            <div class="tool-icon" aria-hidden="true">↻</div>
+            <h3>Leadership Check-in</h3>
+            <p class="tool-question">What needs attention right now?</p>
+            <p>Use during leadership or improvement meetings for a quick evidence-informed progress check.</p>
+          </div>
+          <a class="btn btn-blue" href="#checkin">Open tool →</a>
+        </article>
+
+        <article class="card tool-card" style="--tool:var(--teal)">
+          <div>
+            <div class="tool-icon" aria-hidden="true">→</div>
+            <h3>Next-Step Decision</h3>
+            <p class="tool-question">What do we do next?</p>
+            <p>Decide whether to continue, deepen, refine, reconsider or move to a new focus.</p>
+          </div>
+          <a class="btn btn-blue" href="#decision">Open tool →</a>
+        </article>
+      </div>
+    </section>
+
+    <section id="implementation" class="card tool-section" style="--tool:var(--blue)">
+      <div class="tool-header">
+        <div>
+          <h2>Implementation Monitoring Tool</h2>
+          <p><strong>Leadership question:</strong> Are we doing what we agreed?</p>
+        </div>
+        <a class="btn btn-ghost back-top" href="#choose">Choose another tool</a>
+      </div>
+
+      <div class="callout"><strong>Use this tool when:</strong> you need to check whether the agreed improvement actions are actually being enacted before interpreting outcome data.</div>
+
+      <div class="form-grid">
+        <div class="field">
+          <label for="imp-priority">Improvement priority</label>
+          <input id="imp-priority" type="text" data-save="imp-priority">
+        </div>
+        <div class="field">
+          <label for="imp-date">Monitoring date</label>
+          <input id="imp-date" type="date" data-save="imp-date">
+        </div>
+
+        <div class="field full">
+          <label for="imp-action">Agreed action or practice being monitored</label>
+          <textarea id="imp-action" data-save="imp-action"></textarea>
+        </div>
+
+        <div class="field">
+          <label for="imp-look">What should this look like when implemented well?</label>
+          <textarea id="imp-look" data-save="imp-look"></textarea>
+        </div>
+        <div class="field">
+          <label for="imp-source">Evidence sources used</label>
+          <textarea id="imp-source" data-save="imp-source" placeholder="e.g. walkthroughs, planning, student work, meeting records, staff feedback"></textarea>
+        </div>
+
+        <div class="field full">
+          <label>Current implementation judgement</label>
+          <div class="scale">
+            <label><input type="radio" name="imp-stage" value="Not yet evident" data-radio="imp-stage"> Not yet evident</label>
+            <label><input type="radio" name="imp-stage" value="Emerging" data-radio="imp-stage"> Emerging</label>
+            <label><input type="radio" name="imp-stage" value="Consistent" data-radio="imp-stage"> Consistent</label>
+            <label><input type="radio" name="imp-stage" value="Embedded" data-radio="imp-stage"> Embedded</label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="imp-evidence">Evidence observed</label>
+          <textarea id="imp-evidence" data-save="imp-evidence"></textarea>
+        </div>
+        <div class="field">
+          <label for="imp-barrier">Barriers or enablers identified</label>
+          <textarea id="imp-barrier" data-save="imp-barrier"></textarea>
+        </div>
+
+        <div class="field">
+          <label for="imp-next">Immediate next step</label>
+          <textarea id="imp-next" data-save="imp-next"></textarea>
+        </div>
+        <div class="field">
+          <label for="imp-owner">Who will lead or support this?</label>
+          <input id="imp-owner" type="text" data-save="imp-owner">
+          <label for="imp-review" style="margin-top:12px">Next review date</label>
+          <input id="imp-review" type="date" data-save="imp-review">
+        </div>
+      </div>
+
+      <div class="tool-actions">
+        <button type="button" class="btn btn-blue print-tool" data-print="implementation">Print / Save this tool</button>
+        <button type="button" class="btn btn-ghost clear-tool" data-clear-prefix="imp-">Clear this tool</button>
+      </div>
+      <p class="status">Responses save automatically in this browser.</p>
+    </section>
+
+    <section id="impact" class="card tool-section" style="--tool:var(--green)">
+      <div class="tool-header">
+        <div>
+          <h2>Impact Review Tool</h2>
+          <p><strong>Leadership question:</strong> Is it making a difference?</p>
+        </div>
+        <a class="btn btn-ghost back-top" href="#choose">Choose another tool</a>
+      </div>
+
+      <div class="callout"><strong>Use this tool when:</strong> implementation has had enough time to occur and you are ready to compare current evidence with your intended change.</div>
+
+      <div class="form-grid">
+        <div class="field">
+          <label for="impact-priority">Improvement priority</label>
+          <input id="impact-priority" type="text" data-save="impact-priority">
+        </div>
+        <div class="field">
+          <label for="impact-date">Review date</label>
+          <input id="impact-date" type="date" data-save="impact-date">
+        </div>
+
+        <div class="field">
+          <label for="impact-practice">Intended change in practice</label>
+          <textarea id="impact-practice" data-save="impact-practice"></textarea>
+        </div>
+        <div class="field">
+          <label for="impact-student">Intended change for students / outcomes</label>
+          <textarea id="impact-student" data-save="impact-student"></textarea>
+        </div>
+
+        <div class="field">
+          <label for="impact-baseline">Baseline evidence</label>
+          <textarea id="impact-baseline" data-save="impact-baseline"></textarea>
+        </div>
+        <div class="field">
+          <label for="impact-current">Current evidence</label>
+          <textarea id="impact-current" data-save="impact-current"></textarea>
+        </div>
+
+        <div class="field">
+          <label for="impact-changed">What has changed?</label>
+          <textarea id="impact-changed" data-save="impact-changed"></textarea>
+        </div>
+        <div class="field">
+          <label for="impact-notchanged">What has not changed, or remains inconsistent?</label>
+          <textarea id="impact-notchanged" data-save="impact-notchanged"></textarea>
+        </div>
+
+        <div class="field">
+          <label for="impact-benefit">Who appears to be benefiting?</label>
+          <textarea id="impact-benefit" data-save="impact-benefit"></textarea>
+        </div>
+        <div class="field">
+          <label for="impact-gap">Who may not yet be benefiting?</label>
+          <textarea id="impact-gap" data-save="impact-gap"></textarea>
+        </div>
+
+        <div class="field full">
+          <label>Strength of the current evidence</label>
+          <div class="scale">
+            <label><input type="radio" name="impact-strength" value="Insufficient" data-radio="impact-strength"> Insufficient</label>
+            <label><input type="radio" name="impact-strength" value="Emerging" data-radio="impact-strength"> Emerging</label>
+            <label><input type="radio" name="impact-strength" value="Convincing" data-radio="impact-strength"> Convincing</label>
+            <label><input type="radio" name="impact-strength" value="Sustained" data-radio="impact-strength"> Sustained</label>
+          </div>
+        </div>
+
+        <div class="field full">
+          <label for="impact-conclusion">What conclusion can we make at this point?</label>
+          <textarea id="impact-conclusion" data-save="impact-conclusion"></textarea>
+        </div>
+      </div>
+
+      <div class="tool-actions">
+        <button type="button" class="btn btn-blue print-tool" data-print="impact">Print / Save this tool</button>
+        <button type="button" class="btn btn-ghost clear-tool" data-clear-prefix="impact-">Clear this tool</button>
+      </div>
+      <p class="status">Responses save automatically in this browser.</p>
+    </section>
+
+    <section id="triangulation" class="card tool-section" style="--tool:var(--purple)">
+      <div class="tool-header">
+        <div>
+          <h2>Evidence Triangulation Tool</h2>
+          <p><strong>Leadership question:</strong> What does the evidence collectively tell us?</p>
+        </div>
+        <a class="btn btn-ghost back-top" href="#choose">Choose another tool</a>
+      </div>
+
+      <div class="callout"><strong>Use this tool when:</strong> one source of data is not enough. Look across different evidence lenses and identify where the evidence converges, differs or remains incomplete.</div>
+
+      <div class="form-grid">
+        <div class="field">
+          <label for="tri-priority">Improvement priority</label>
+          <input id="tri-priority" type="text" data-save="tri-priority">
+        </div>
+        <div class="field">
+          <label for="tri-question">Question we are trying to answer</label>
+          <input id="tri-question" type="text" data-save="tri-question">
+        </div>
+      </div>
+
+      <div class="evidence-grid">
+        <div class="evidence-lens">
+          <h3>1. Implementation evidence</h3>
+          <p class="small">What are adults doing differently?</p>
+          <label for="tri-implementation">Evidence</label>
+          <textarea id="tri-implementation" data-save="tri-implementation" placeholder="e.g. walkthroughs, observations, planning, meeting records"></textarea>
+          <label for="tri-implementation-meaning">What does this suggest?</label>
+          <textarea id="tri-implementation-meaning" data-save="tri-implementation-meaning"></textarea>
+        </div>
+
+        <div class="evidence-lens">
+          <h3>2. Outcome evidence</h3>
+          <p class="small">What is changing for students?</p>
+          <label for="tri-outcome">Evidence</label>
+          <textarea id="tri-outcome" data-save="tri-outcome" placeholder="e.g. student work, assessment, attendance, engagement, behaviour data"></textarea>
+          <label for="tri-outcome-meaning">What does this suggest?</label>
+          <textarea id="tri-outcome-meaning" data-save="tri-outcome-meaning"></textarea>
+        </div>
+
+        <div class="evidence-lens">
+          <h3>3. Perception / experience evidence</h3>
+          <p class="small">What are staff and students experiencing?</p>
+          <label for="tri-perception">Evidence</label>
+          <textarea id="tri-perception" data-save="tri-perception" placeholder="e.g. staff voice, student voice, family feedback, surveys"></textarea>
+          <label for="tri-perception-meaning">What does this suggest?</label>
+          <textarea id="tri-perception-meaning" data-save="tri-perception-meaning"></textarea>
+        </div>
+      </div>
+
+      <div class="form-grid">
+        <div class="field">
+          <label for="tri-converge">Where does the evidence converge?</label>
+          <textarea id="tri-converge" data-save="tri-converge"></textarea>
+        </div>
+        <div class="field">
+          <label for="tri-conflict">Where does it differ or conflict?</label>
+          <textarea id="tri-conflict" data-save="tri-conflict"></textarea>
+        </div>
+        <div class="field">
+          <label for="tri-missing">What evidence is still missing?</label>
+          <textarea id="tri-missing" data-save="tri-missing"></textarea>
+        </div>
+        <div class="field">
+          <label for="tri-confidence">How confident are we in the conclusion, and why?</label>
+          <textarea id="tri-confidence" data-save="tri-confidence"></textarea>
+        </div>
+        <div class="field full">
+          <label for="tri-conclusion">Conclusion supported across the evidence</label>
+          <textarea id="tri-conclusion" data-save="tri-conclusion"></textarea>
+        </div>
+      </div>
+
+      <div class="tool-actions">
+        <button type="button" class="btn btn-blue print-tool" data-print="triangulation">Print / Save this tool</button>
+        <button type="button" class="btn btn-ghost clear-tool" data-clear-prefix="tri-">Clear this tool</button>
+      </div>
+      <p class="status">Responses save automatically in this browser.</p>
+    </section>
+
+    <section id="checkin" class="card tool-section" style="--tool:var(--gold)">
+      <div class="tool-header">
+        <div>
+          <h2>Quick Leadership Check-in</h2>
+          <p><strong>Leadership question:</strong> What needs attention right now?</p>
+        </div>
+        <a class="btn btn-ghost back-top" href="#choose">Choose another tool</a>
+      </div>
+
+      <div class="callout"><strong>Use this tool when:</strong> you want a short, repeatable discussion structure for leadership meetings, team check-ins or implementation reviews.</div>
+
+      <div class="form-grid">
+        <div class="field">
+          <label for="check-priority">Priority / focus</label>
+          <input id="check-priority" type="text" data-save="check-priority">
+        </div>
+        <div class="field">
+          <label for="check-date">Check-in date</label>
+          <input id="check-date" type="date" data-save="check-date">
+        </div>
+
+        <div class="field">
+          <label for="check-expect">What did we expect to see by now?</label>
+          <textarea id="check-expect" data-save="check-expect"></textarea>
+        </div>
+        <div class="field">
+          <label for="check-actual">What are we actually seeing?</label>
+          <textarea id="check-actual" data-save="check-actual"></textarea>
+        </div>
+
+        <div class="field">
+          <label for="check-proof">What evidence supports that view?</label>
+          <textarea id="check-proof" data-save="check-proof"></textarea>
+        </div>
+        <div class="field">
+          <label for="check-working">What is working well?</label>
+          <textarea id="check-working" data-save="check-working"></textarea>
+        </div>
+
+        <div class="field">
+          <label for="check-barrier">What is getting in the way?</label>
+          <textarea id="check-barrier" data-save="check-barrier"></textarea>
+        </div>
+        <div class="field">
+          <label for="check-attention">What needs attention before the next check-in?</label>
+          <textarea id="check-attention" data-save="check-attention"></textarea>
+        </div>
+
+        <div class="field">
+          <label for="check-who">Who will do what?</label>
+          <textarea id="check-who" data-save="check-who"></textarea>
+        </div>
+        <div class="field">
+          <label for="check-nextdate">Next check-in</label>
+          <input id="check-nextdate" type="date" data-save="check-nextdate">
+        </div>
+      </div>
+
+      <div class="tool-actions">
+        <button type="button" class="btn btn-blue print-tool" data-print="checkin">Print / Save this tool</button>
+        <button type="button" class="btn btn-ghost clear-tool" data-clear-prefix="check-">Clear this tool</button>
+      </div>
+      <p class="status">Responses save automatically in this browser.</p>
+    </section>
+
+    <section id="decision" class="card tool-section" style="--tool:var(--teal)">
+      <div class="tool-header">
+        <div>
+          <h2>Next-Step Decision Tool</h2>
+          <p><strong>Leadership question:</strong> What do we do next?</p>
+        </div>
+        <a class="btn btn-ghost back-top" href="#choose">Choose another tool</a>
+      </div>
+
+      <div class="callout"><strong>Use this tool when:</strong> you have reviewed implementation and impact evidence and need to make a disciplined decision about the next stage of the improvement work.</div>
+
+      <div class="form-grid">
+        <div class="field">
+          <label for="decision-priority">Current improvement priority</label>
+          <input id="decision-priority" type="text" data-save="decision-priority">
+        </div>
+        <div class="field">
+          <label for="decision-date">Decision date</label>
+          <input id="decision-date" type="date" data-save="decision-date">
+        </div>
+      </div>
+
+      <label>Our evidence suggests we should:</label>
+      <div class="decision-grid">
+        <div class="decision-option">
+          <label>
+            <input type="radio" name="decision-choice" value="Continue" data-radio="decision-choice">
+            <strong>CONTINUE</strong>
+            <span class="small">The approach is working. Maintain implementation.</span>
+          </label>
+        </div>
+
+        <div class="decision-option">
+          <label>
+            <input type="radio" name="decision-choice" value="Deepen" data-radio="decision-choice">
+            <strong>DEEPEN</strong>
+            <span class="small">It is working, but greater consistency, reach or sophistication is needed.</span>
+          </label>
+        </div>
+
+        <div class="decision-option">
+          <label>
+            <input type="radio" name="decision-choice" value="Refine" data-radio="decision-choice">
+            <strong>REFINE</strong>
+            <span class="small">The priority remains right, but the approach needs adjustment.</span>
+          </label>
+        </div>
+
+        <div class="decision-option">
+          <label>
+            <input type="radio" name="decision-choice" value="Reconsider" data-radio="decision-choice">
+            <strong>RECONSIDER</strong>
+            <span class="small">The evidence does not currently support continuing the approach as planned.</span>
+          </label>
+        </div>
+
+        <div class="decision-option">
+          <label>
+            <input type="radio" name="decision-choice" value="New focus" data-radio="decision-choice">
+            <strong>NEW FOCUS</strong>
+            <span class="small">The current improvement is sufficiently embedded and a new priority should be scanned.</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="form-grid">
+        <div class="field full">
+          <label for="decision-evidence">What evidence makes us confident in this decision?</label>
+          <textarea id="decision-evidence" data-save="decision-evidence"></textarea>
+        </div>
+
+        <div class="field">
+          <label for="decision-keep">What should we retain or protect?</label>
+          <textarea id="decision-keep" data-save="decision-keep"></textarea>
+        </div>
+        <div class="field">
+          <label for="decision-change">What needs to change?</label>
+          <textarea id="decision-change" data-save="decision-change"></textarea>
+        </div>
+
+        <div class="field">
+          <label for="decision-next">Immediate next action</label>
+          <textarea id="decision-next" data-save="decision-next"></textarea>
+        </div>
+        <div class="field">
+          <label for="decision-responsible">Who is responsible?</label>
+          <input id="decision-responsible" type="text" data-save="decision-responsible">
+          <label for="decision-review" style="margin-top:12px">When will we review again?</label>
+          <input id="decision-review" type="date" data-save="decision-review">
+        </div>
+
+        <div class="field full">
+          <label for="decision-cycle">If beginning a new cycle, what question or area will we scan next?</label>
+          <textarea id="decision-cycle" data-save="decision-cycle"></textarea>
+        </div>
+      </div>
+
+      <div class="tool-actions">
+        <button type="button" class="btn btn-green print-tool" data-print="decision">Print / Save this tool</button>
+        <a class="btn btn-blue" href="index.html#scan">Begin the next Inquiry Cycle →</a>
+        <button type="button" class="btn btn-ghost clear-tool" data-clear-prefix="decision-">Clear this tool</button>
+      </div>
+      <p class="status">Responses save automatically in this browser.</p>
+    </section>
+  </main>
+
+  <footer>
+    <div class="inner">
+      <strong>From Evidence to Impact</strong>
+      <p>Monitoring evidence, reviewing impact and making disciplined decisions about what comes next.</p>
+      <p><a href="index.html" style="color:#fff">Return to the Inquiry Cycle homepage</a></p>
+    </div>
+  </footer>
+
+  <script>
+    const prefix = "monitor-review-v1-";
+
+    document.querySelectorAll("[data-save]").forEach(el => {
+      const key = prefix + el.dataset.save;
+      const saved = localStorage.getItem(key);
+      if(saved !== null) el.value = saved;
+      el.addEventListener("input", () => localStorage.setItem(key, el.value));
+      el.addEventListener("change", () => localStorage.setItem(key, el.value));
+    });
+
+    document.querySelectorAll("[data-radio]").forEach(el => {
+      const key = prefix + "radio-" + el.dataset.radio;
+      const saved = localStorage.getItem(key);
+      if(saved === el.value) el.checked = true;
+      el.addEventListener("change", () => {
+        if(el.checked) localStorage.setItem(key, el.value);
+      });
+    });
+
+    let scale = Number(localStorage.getItem(prefix + "font-scale") || 1);
+    const root = document.documentElement;
+
+    function applyScale(){
+      scale = Math.max(.9, Math.min(1.35, scale));
+      root.style.setProperty("--font-scale", scale);
+      localStorage.setItem(prefix + "font-scale", scale);
+    }
+
+    document.getElementById("textUp").addEventListener("click", () => { scale += .1; applyScale(); });
+    document.getElementById("textDown").addEventListener("click", () => { scale -= .1; applyScale(); });
+
+    const contrastKey = prefix + "contrast";
+    if(localStorage.getItem(contrastKey) === "true") document.body.classList.add("high-contrast");
+
+    document.getElementById("contrastToggle").addEventListener("click", () => {
+      document.body.classList.toggle("high-contrast");
+      localStorage.setItem(contrastKey, document.body.classList.contains("high-contrast"));
+    });
+
+    document.getElementById("printPage").addEventListener("click", () => window.print());
+
+    document.querySelectorAll(".print-tool").forEach(button => {
+      button.addEventListener("click", () => {
+        const target = document.getElementById(button.dataset.print);
+        target.scrollIntoView({behavior:"auto", block:"start"});
+        window.print();
+      });
+    });
+
+    document.querySelectorAll(".clear-tool").forEach(button => {
+      button.addEventListener("click", () => {
+        const fieldPrefix = button.dataset.clearPrefix;
+        const section = button.closest(".tool-section");
+        const confirmed = window.confirm("Clear the saved responses in this tool?");
+        if(!confirmed) return;
+
+        section.querySelectorAll("[data-save]").forEach(el => {
+          if(el.dataset.save.startsWith(fieldPrefix)){
+            localStorage.removeItem(prefix + el.dataset.save);
+            el.value = "";
+          }
+        });
+
+        section.querySelectorAll("[data-radio]").forEach(el => {
+          const radioName = el.dataset.radio;
+          if(radioName.startsWith(fieldPrefix.replace(/-$/,"")) || section.contains(el)){
+            localStorage.removeItem(prefix + "radio-" + radioName);
+            el.checked = false;
+          }
+        });
+      });
+    });
+
+    applyScale();
+  </script>
+</body>
+</html>

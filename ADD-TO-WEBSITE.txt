@@ -1,0 +1,33 @@
+MONITORING & REVIEW TOOLKIT — GITHUB INSTRUCTIONS
+
+1. Upload `monitor-review-toolkit.html` to the SAME level as `index.html` in your Inquiry-Cycle repository.
+
+Your repository should look like:
+
+index.html
+monitor-review-toolkit.html
+
+2. On the main index.html page, add this button inside the Monitor & Review section:
+
+<a class="btn btn-blue" href="monitor-review-toolkit.html">
+  Open Monitoring &amp; Review Toolkit →
+</a>
+
+If you prefer it to match the existing complete-phase button, use:
+
+<a class="resource-link" href="monitor-review-toolkit.html">
+  Open Monitoring &amp; Review Toolkit →
+</a>
+
+3. Commit the change.
+
+Because you are using GitHub Pages from the main branch, no additional workflow or folder is required.
+
+The toolkit page contains:
+- Implementation Monitoring Tool
+- Impact Review Tool
+- Evidence Triangulation Tool
+- Quick Leadership Check-in
+- Next-Step Decision Tool
+
+Responses save in the user's browser using localStorage.
